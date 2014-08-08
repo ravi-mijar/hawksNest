@@ -1,0 +1,29 @@
+@(expenses: List[Expense] , expenseForm: Form[Expense])
+
+@import helper._
+
+@main("Expense Management System") {
+    
+    <h1>@expenses.size() expense(s)</h1>
+    <ul>
+    	ID 		| 	Category	|	 Description	|	 Amount
+		@for(expense <- expenses) {
+			<li>
+				@expense.id 	|
+				@expense.category	| 
+				@expense.description 	|
+				@expense.amount	
+				@form(routes.Application.delete(expense.id)) {
+   					<input type="submit" value="Delete">
+   					}
+			</li> 
+		}
+	</ul>
+    <h2>Add a new expense</h2>
+    @form(routes.Application.newExpense()) {
+    	@inputText(expenseForm("Category"))  @inputText(expenseForm("Description"))  @inputText(expenseForm("Amount"))
+    	
+    	<input type="submit" value="Add">
+    }
+    
+}
